@@ -31,8 +31,10 @@ def isPhoneNumber (text):
 #print(isPhoneNumber('Moshi moshi'))
 
 message =  "Call me at 415-555-1011 tomorrow. 415-555-9999 is my office"
+#On each iteration of the for loop, a new chunk of 12 characters from message is assigned to the variable chunk.
 for i in range (len(message)):
     chunk = message[i:i+12]
+    #You pass chunk to isPhoneNumber() to see whether it matches the phone number pattern, and if so, you print the chunk.
     if isPhoneNumber(chunk):
         print("Phone number found: " + chunk)
 print("Done")
