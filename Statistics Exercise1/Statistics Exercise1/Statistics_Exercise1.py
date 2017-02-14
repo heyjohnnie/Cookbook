@@ -1,24 +1,21 @@
+import numpy as np
 
 def arrayFromFile ():
-    import csv
-    import numpy
+    #Import data from file, sort and flatten the array, then return the array.
+    dataFromFile = np.sort(np.genfromtxt("Test.csv", delimiter = ","), axis = None)
+    return dataFromFile
 
-    READ = "r"
-    fileList = []
+def nonGrupedData(data):
+    #Find common values and their frequency, create a 2D array
+    commonValues = np.unique(data)
+    frequency = commonValues.searchsorted(data)
+    return commonValues, np.bincount(frequency)
 
-    #Open file more securely
-    with open("Test.csv", READ) as myCSVFile:
-        #Create list from file
-        rowFromFile = csv.reader(myCSVFile)
-        #Merge all values of all rows into a single list
-        for row in rowFromFile:
-            for value in row:
-                fileList.append(value)
-                
-        #Transform list into an array
-        numericData = numpy.array(fileList).astype("float")
 
-    return numericData
+sampleData = arrayFromFile()
+sampleSize = sampleData.size
 
-firstArray = arrayFromFile()
-print (firstArray)
+#The traspose method switches rows into columns.
+sampleFrequency = np.transpose(nonGrupedData(sampleData))
+np.savetxt("result.csv", sampleFrequency, delimiter = ",", fmt = "%10.5f")
+print ("File saved!")
