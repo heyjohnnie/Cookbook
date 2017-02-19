@@ -2,7 +2,7 @@ import numpy as np
 
 def arrayFromFile ():
     #Import data from file, sort and flatten the array, then return the array.
-    dataFromFile = np.sort(np.genfromtxt("Test.csv", delimiter = ","), axis = None)
+    dataFromFile = np.sort(np.genfromtxt("Test.csv", delimiter = ",", dtype = str), axis = None)
     return dataFromFile
 
 def nonGrupedData(data):
@@ -11,11 +11,11 @@ def nonGrupedData(data):
     frequency = commonValues.searchsorted(data)
     return commonValues, np.bincount(frequency)
 
-
 sampleData = arrayFromFile()
 sampleSize = sampleData.size
+sampleFrequency = nonGrupedData(sampleData)
 
-#The traspose method switches rows into columns.
-sampleFrequency = np.transpose(nonGrupedData(sampleData))
-np.savetxt("result.csv", sampleFrequency, delimiter = ",", fmt = "%10.5f")
+#The dataTable variable prepares the info before being saved into a CVS file
+dataTable = np.transpose(sampleFrequency)
+np.savetxt("result.csv", dataTable, delimiter = ",", fmt = "%s")
 print ("File saved!")
